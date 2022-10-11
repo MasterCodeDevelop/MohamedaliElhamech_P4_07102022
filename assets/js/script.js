@@ -1,6 +1,7 @@
 // DOM Elements
 const modalbg = document.querySelector(".bground"),
 modalBtn = document.querySelectorAll(".modal-btn"),
+modalBody = document.querySelector(".modal-body"),
 formData = document.querySelectorAll(".formData"),
 close = document.querySelector(".close"),
 submit = document.querySelector(".btn-submit"),
@@ -9,9 +10,8 @@ email = document.getElementById("email"),
 birthDate = document.getElementById("birthdate"),
 quantity = document.getElementById("quantity"),
 eventLocation = document.querySelectorAll(".checkbox-input[name='location']"),
-condition = document.querySelector("#checkbox1");
-
-
+condition = document.querySelector("#checkbox1"),
+form = document.querySelector("form");
 
 // Regex
 const RegName = /^[a-zA-Z\- ]{2,20}$/i,
@@ -126,7 +126,27 @@ const verifyCondition = () => {
 submit.addEventListener("click", (e) => {
   e.preventDefault();
   if( verifyFirstName() && verifyLastName() && verifyMail() && verifyBirthDate() && verifyQuantity() && verifyCheckbox() && verifyCondition() ) {
-    console.log('form is OK !')
+    
+    const div = document.createElement("div");
+    form.style.display = "none";
+    
+    // create a new message of success
+    const alert = document.createElement("h1");
+    alert.style.fontWeight = 400;
+    alert.innerHTML = "Merci pour <br> votre inscription";
+
+    // Create a new button for close the modal
+    const button = document.createElement("button");
+    button.className = "btn-submit";
+    button.innerText = "Fermer"
+    button.addEventListener("click", () => {
+        modalbg.style.display = "none";
+    })
+
+    // Add the elements
+    div.appendChild(alert);
+    div.appendChild(button);
+    modalBody.appendChild(div);
   }
 })
 
