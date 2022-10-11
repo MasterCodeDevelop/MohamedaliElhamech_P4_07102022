@@ -82,10 +82,22 @@ const verifyBirthDate = () => {
   else return removeDataErrror(parentElement);
 }
 
+// verify the number of tournaments already played
+quantity.addEventListener("change", () => verifyQuantity());
+const verifyQuantity = () => {
+  let {value, parentElement} = quantity;
+
+  if (value.length == 0) {
+    displayDataError(parentElement, "Veuillez entrer le nombre de tournois où quel vous avez déja participé.")
+  } else if (value < 0 || value > 99 || !Number.isInteger(parseFloat(value)) ) {
+    displayDataError(parentElement, "Vous devez saisir un numbre correct entre 0 et 99 compris")
+  } else return removeDataErrror(parentElement);
+}
+
 // if the submitted form
 submit.addEventListener("click", (e) => {
   e.preventDefault();
-  if( verifyFirstName() && verifyLastName() && verifyMail() && verifyBirthDate() ) {
+  if( verifyFirstName() && verifyLastName() && verifyMail() && verifyBirthDate() && verifyQuantity() ) {
     console.log('form is OK !')
   }
 })
