@@ -61,7 +61,7 @@ const verifyMail = () => {
 // if the submitted form
 submit.addEventListener("click", (e) => {
   e.preventDefault();
-  if(verifyFirstName() && verifyLastName()) {
+  if(verifyFirstName() && verifyLastName() && verifyMail()) {
     console.log('form is OK !')
   }
 })
