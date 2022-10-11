@@ -22,12 +22,7 @@ close.addEventListener("click", () => {
   modalbg.style.display = "none";
 })
 
-// if the  submitted form
-submit.addEventListener("click", (e) => {
-  e.preventDefault();
-})
-
-// verify FirstName
+// verify First Name
 first.addEventListener("change", () => verifyFirstName());
 const verifyFirstName = () => {
   let { value, parentElement } = first,
@@ -38,6 +33,27 @@ const verifyFirstName = () => {
   else if (!RegName.test(value)) displayDataError(parentElement, "Veuillez entrer un prénom correct.");
   else return removeDataErrror(parentElement);
 }
+
+// Verify last Name
+last.addEventListener("change", () => verifyLastName());
+const verifyLastName = () => {
+
+  let { value, parentElement } = last,
+  length = value.length - (value.split(" ").length-1);
+
+  if (length == 0) displayDataError(parentElement, "Veuillez entrer votre nom.");
+  else if (length < 2) displayDataError(parentElement, "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+  else if (!RegName.test(value)) displayDataError(parentElement, "Veuillez entrer un nom correct.");
+  else return removeDataErrror(parentElement);
+} 
+
+// if the  submitted form
+submit.addEventListener("click", (e) => {
+  e.preventDefault();
+  if(verifyFirstName() && verifyLastName()) {
+    console.log('form is OK !')
+  }
+})
 
 // allows you to change the status of topnav
 function editNav() {
