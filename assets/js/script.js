@@ -8,7 +8,8 @@ first = document.getElementById("first"),
 email = document.getElementById("email"),
 birthDate = document.getElementById("birthdate"),
 quantity = document.getElementById("quantity"),
-eventLocation = document.querySelectorAll(".checkbox-input[name='location']");
+eventLocation = document.querySelectorAll(".checkbox-input[name='location']"),
+condition = document.querySelector("#checkbox1");
 
 
 
@@ -112,10 +113,19 @@ const verifyCheckbox = () => {
   else return removeDataErrror(parentElement);
 }
 
+// verify the condition
+condition.addEventListener("change", () => verifyCondition())
+const verifyCondition = () => {
+  let { checked, parentElement } = condition;
+
+  if (!checked) displayDataError(parentElement, "Vous devez vérifier que vous acceptez les termes et conditions");
+  else return removeDataErrror(parentElement);
+}
+
 // if the submitted form
 submit.addEventListener("click", (e) => {
   e.preventDefault();
-  if( verifyFirstName() && verifyLastName() && verifyMail() && verifyBirthDate() && verifyQuantity() && verifyCheckbox() ) {
+  if( verifyFirstName() && verifyLastName() && verifyMail() && verifyBirthDate() && verifyQuantity() && verifyCheckbox() && verifyCondition() ) {
     console.log('form is OK !')
   }
 })
