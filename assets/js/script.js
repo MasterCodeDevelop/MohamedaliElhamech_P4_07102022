@@ -5,7 +5,8 @@ formData = document.querySelectorAll(".formData"),
 close = document.querySelector(".close"),
 submit = document.querySelector(".btn-submit"),
 first = document.getElementById("first"),
-email = document.getElementById("email");
+email = document.getElementById("email"),
+birthDate = document.getElementById("birthdate");
 
 // Regex
 const RegName = /^[a-zA-Z\- ]{2,20}$/i,
@@ -58,10 +59,33 @@ const verifyMail = () => {
   else return removeDataErrror(parentElement);
 } 
 
+// Verify bith date
+birthDate.addEventListener("change", () => verifyBirthDate());
+const verifyBirthDate = () => {
+  let { value, parentElement } = birthDate,
+  inputDate = new Date(value),
+  today = new Date(),
+  validDate = (age) => {
+    return new Date(
+      today.getFullYear()-age,
+      today.getMonth(),
+      today.getDate(),
+      today.getHours(),
+      today.getMinutes()
+    );
+  }; 
+  // min 3 years and max 100 years
+  const min = validDate(3), max = validDate(100);
+
+  if (value.length == 0) displayDataError(parentElement, "Vous devez entrer votre date de naissance.");
+  else if (inputDate < max || inputDate > min ) displayDataError(parentElement, "Votre date de naissance est inccorect ! vous devez avoir entre 3 et 100 ans.");
+  else return removeDataErrror(parentElement);
+}
+
 // if the submitted form
 submit.addEventListener("click", (e) => {
   e.preventDefault();
-  if(verifyFirstName() && verifyLastName() && verifyMail()) {
+  if( verifyFirstName() && verifyLastName() && verifyMail() && verifyBirthDate() ) {
     console.log('form is OK !')
   }
 })
