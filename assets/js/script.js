@@ -6,7 +6,9 @@ close = document.querySelector(".close"),
 submit = document.querySelector(".btn-submit"),
 first = document.getElementById("first"),
 email = document.getElementById("email"),
-birthDate = document.getElementById("birthdate");
+birthDate = document.getElementById("birthdate"),
+quantity = document.getElementById("quantity");
+
 
 // Regex
 const RegName = /^[a-zA-Z\- ]{2,20}$/i,
@@ -94,10 +96,12 @@ const verifyQuantity = () => {
   } else return removeDataErrror(parentElement);
 }
 
+
 // if the submitted form
 submit.addEventListener("click", (e) => {
   e.preventDefault();
-  if( verifyFirstName() && verifyLastName() && verifyMail() && verifyBirthDate() && verifyQuantity() ) {
+  if( /*verifyFirstName() && verifyLastName() && verifyMail() && verifyBirthDate() && */ verifyQuantity() ) {
+    console.log(quantity)
     console.log('form is OK !')
   }
 })
