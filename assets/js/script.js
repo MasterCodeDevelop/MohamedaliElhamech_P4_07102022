@@ -7,7 +7,9 @@ submit = document.querySelector(".btn-submit"),
 first = document.getElementById("first"),
 email = document.getElementById("email"),
 birthDate = document.getElementById("birthdate"),
-quantity = document.getElementById("quantity");
+quantity = document.getElementById("quantity"),
+eventLocation = document.querySelectorAll(".checkbox-input[name='location']");
+
 
 
 // Regex
@@ -96,12 +98,24 @@ const verifyQuantity = () => {
   } else return removeDataErrror(parentElement);
 }
 
+// Verify checkBox of tournaments
+for (const e of eventLocation) e.addEventListener("change", () => verifyCheckbox());
+const verifyCheckbox = () => {
+  let checked = false,
+  parentElement = eventLocation[0].parentElement;
+
+  for (const e of eventLocation) {
+    if(e.checked) checked = true;
+  }
+
+  if (!checked) displayDataError(parentElement, "Vous devez choisir une option.");
+  else return removeDataErrror(parentElement);
+}
 
 // if the submitted form
 submit.addEventListener("click", (e) => {
   e.preventDefault();
-  if( /*verifyFirstName() && verifyLastName() && verifyMail() && verifyBirthDate() && */ verifyQuantity() ) {
-    console.log(quantity)
+  if( verifyFirstName() && verifyLastName() && verifyMail() && verifyBirthDate() && verifyQuantity() && verifyCheckbox() ) {
     console.log('form is OK !')
   }
 })
