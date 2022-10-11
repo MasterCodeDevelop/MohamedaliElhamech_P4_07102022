@@ -4,10 +4,12 @@ modalBtn = document.querySelectorAll(".modal-btn"),
 formData = document.querySelectorAll(".formData"),
 close = document.querySelector(".close"),
 submit = document.querySelector(".btn-submit"),
-first = document.getElementById("first");
+first = document.getElementById("first"),
+email = document.getElementById("email");
 
 // Regex
-const RegName = /^[a-zA-Z\- ]{2,20}$/i;
+const RegName = /^[a-zA-Z\- ]{2,20}$/i,
+RegMail = /^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/i;
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -47,7 +49,16 @@ const verifyLastName = () => {
   else return removeDataErrror(parentElement);
 } 
 
-// if the  submitted form
+// Verify Email
+email.addEventListener("change", () => verifyMail())
+const verifyMail = () => {
+  let { value, parentElement } = email;
+  if (value.length == 0) displayDataError(parentElement, "Veuillez entrer votre adresse email");
+  else if (!RegMail.test(value)) displayDataError(parentElement, "Votre adresse email est incorrect");
+  else return removeDataErrror(parentElement);
+} 
+
+// if the submitted form
 submit.addEventListener("click", (e) => {
   e.preventDefault();
   if(verifyFirstName() && verifyLastName()) {
