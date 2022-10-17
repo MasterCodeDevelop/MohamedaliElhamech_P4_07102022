@@ -1,5 +1,7 @@
 // DOM Elements
-const modalbg = document.querySelector(".bground"),
+const header = document.getElementById("header"),
+navbarToggler = document.getElementById("navbar-toggler"),
+modalbg = document.querySelector(".bground"),
 modalBtn = document.querySelectorAll(".modal-btn"),
 modalBody = document.querySelector(".modal-body"),
 formData = document.querySelectorAll(".formData"),
@@ -16,6 +18,11 @@ form = document.querySelector("form");
 // Regex
 const RegName = /^[a-zA-Z\- ]{2,20}$/i,
 RegMail = /^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/i;
+
+// launch/Display the mobile navbar
+navbarToggler.addEventListener("click", () => {
+  header.classList.toggle("is-open");
+})
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
