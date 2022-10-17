@@ -34,7 +34,9 @@ body {
   max-width: 1300px;
   margin: auto;
   padding-block: var(--container-margin-block);
-
+}
+body.scroll-hidden {
+  overflow: hidden;
 }
 li {
   list-style: none;
@@ -353,10 +355,12 @@ label {
   font-size: var(--font-size-l);
 }
 
-footer {
-  padding-left: 2vw;
-  padding-right: 2vw;
-  margin: 0 20px;
+/*========== footer ==========*/
+.copyrights {
+  color: var(--color-second);
+  font-size: 1rem;
+  font-weight: bolder;
+  font-family: "Roboto";
 }
 
 /*====== all desktop screen ======*/
@@ -393,6 +397,10 @@ footer {
   .checkbox-icon::after {
     left: 25%;
     top: 25%;
+  }
+  footer {
+    margin-inline-start: -30px;
+    margin-block: 30px;
   }
 }
 /*====== desktop screen [769 <--> 1440] screen ======*/
@@ -529,6 +537,10 @@ footer {
   .radio-label .radio-icon::after {
     width: 13px;
     height: 13px;
+  }
+  /*== footer ==*/
+  .copyrights {
+    text-align: center;
   }
 }
 
