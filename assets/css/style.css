@@ -2,36 +2,40 @@
 @import url("https://fonts.googleapis.com/css?family=DM+Sans");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
+/*========== Variables ==========*/
 :root {
   --font-default: "DM Sans", Arial, Helvetica, sans-serif;
   --font-slab: var(--font-default);
   --modal-duration: 0.8s;
+  --font-size-m: 1.125rem;
+  --container-gap: 58px;
 }
+
+/*========== reset ==========*/
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-/* Landing Page */
-
 body {
-  margin: 0;
   display: flex;
   flex-direction: column;
+  gap: var(--container-gap);
   background-image: url("background.png");
-  font-family: var(--font-default);
-  font-size: 18px;
+  font-size: var(--font-size-m);
+  font-family: "DM Sans";
+  width: 100vw;
   max-width: 1300px;
-  margin: 0 auto;
-}
+  margin: auto;
+  padding-block: var(--container-margin-block);
 
-p {
-  margin-bottom: 0;
-  padding: 0.5vw;
 }
-
-img {
-  padding-right: 1rem;
+li {
+  list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .topnav {
