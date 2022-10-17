@@ -27,7 +27,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--container-gap);
-  background-image: url("background.png");
   font-size: var(--font-size-m);
   font-family: "DM Sans";
   width: 100vw;
@@ -190,8 +189,6 @@ a {
 .close::after {
   transform: rotate(-45deg);
 }
-
-
 /*========== form ==========*/
 form {
   display: flex;
@@ -199,11 +196,14 @@ form {
   gap: 13px;
   height: 100%;
 }
-label {
+label,.text-label {
   display: inline-block;
   font-size: 14px;
   line-height: 14px;
   margin-bottom: 17px;
+}
+.text-label {
+  width: 100%;
 }
 .text-control {
   outline: none;
@@ -238,15 +238,6 @@ label {
 .formData[data-error-visible=true] .text-control {
   border: 2px solid var(--color-danger);
 }
-.form-check {
-  display: inline-flex;
-}
-/*==== custom select end ====*/
-.text-label {
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 18px;
-}
 
 /*========== input ==========*/
 /*== radio + checkbox ==*/
@@ -258,7 +249,6 @@ label {
   margin-bottom: 12px;
   position: relative;
   margin-left: 30px;
-  margin-right: 3px;
   font-size: 12px;
   font-weight: normal;
 }
@@ -281,6 +271,9 @@ label {
 }
 
 /*== radio ==*/
+.radio-label {
+  margin-right: 25px;
+}
 .radio-label .radio-icon {
   border: 1px solid var(--green);
   border-radius: 50%;
@@ -527,12 +520,15 @@ label {
   .text-control {
     height: 50px;
   }
-  .formData label {
+  .formData label, .text-label {
     margin-bottom: 10px;
   }
   .checkbox-icon, .radio-icon {
     width: 20px !important;
     height: 20px !important;
+  }
+  .radio-label {
+    margin-right: 3px;
   }
   .radio-label .radio-icon::after {
     width: 13px;

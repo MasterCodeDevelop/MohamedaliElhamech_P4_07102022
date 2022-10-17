@@ -1,19 +1,20 @@
 // DOM Elements
-const header = document.getElementById("header"),
+const body = document.querySelector("body"),
+header = document.getElementById("header"),
 navbarToggler = document.getElementById("navbar-toggler"),
-modalbg = document.querySelector(".bground"),
-modalBtn = document.querySelectorAll(".modal-btn"),
+modal = document.querySelector("#modal"),
+btnSignup = document.querySelectorAll(".btn-signup"),
 modalBody = document.querySelector(".modal-body"),
-formData = document.querySelectorAll(".formData"),
 close = document.querySelector(".close"),
+form = document.querySelector("form"),
 submit = document.querySelector(".btn-submit"),
-first = document.getElementById("first"),
+firstName = document.getElementById("firstName"),
+lastName = document.getElementById("lastName"),
 email = document.getElementById("email"),
 birthDate = document.getElementById("birthdate"),
 quantity = document.getElementById("quantity"),
-eventLocation = document.querySelectorAll(".checkbox-input[name='location']"),
-condition = document.querySelector("#checkbox1"),
-form = document.querySelector("form");
+eventLocation = document.querySelectorAll(".radio-input[name='location']"),
+condition = document.querySelector("#checkbox1");
 
 // Regex
 const RegName = /^[a-zA-Z\- ]{2,20}$/i,
@@ -25,54 +26,56 @@ navbarToggler.addEventListener("click", () => {
 })
 
 // launch modal event
-modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-
-// launch modal form
-function launchModal() {
-  modalbg.style.display = "block";
-}
+btnSignup.forEach((btn) => btn.addEventListener("click", () => {
+  body.classList.add("scroll-hidden");
+  modal.classList.add("is-open");
+}));
 
 // closes the modal
 close.addEventListener("click", () => {
-  modalbg.style.display = "none";
+  body.classList.remove("scroll-hidden");
+  modal.classList.remove("is-open")
 })
 
 // verify First Name
-first.addEventListener("change", () => verifyFirstName());
+firstName.addEventListener("change"&&"focusout", () => verifyFirstName());
 const verifyFirstName = () => {
-  let { value, parentElement } = first,
+  let { value, parentElement } = firstName,
   length = value.length - (value.split(" ").length-1);
 
   if (length == 0) displayDataError(parentElement, "Veuillez entrer votre prénom.");
   else if (length < 2) displayDataError(parentElement, "Veuillez entrer 2 caractères ou plus pour le champ du prénom.");
+  else if (length > 40) displayDataError(parentElement, "Votre prénom doit avoir au maximum 40 caractères.");
   else if (!RegName.test(value)) displayDataError(parentElement, "Veuillez entrer un prénom correct.");
   else return removeDataErrror(parentElement);
 }
 
 // Verify last Name
-last.addEventListener("change", () => verifyLastName());
+lastName.addEventListener("change"&&"focusout", () => verifyLastName());
 const verifyLastName = () => {
 
-  let { value, parentElement } = last,
+  let { value, parentElement } = lastName,
   length = value.length - (value.split(" ").length-1);
 
   if (length == 0) displayDataError(parentElement, "Veuillez entrer votre nom.");
   else if (length < 2) displayDataError(parentElement, "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+  else if (length > 40) displayDataError(parentElement, "Votre nom doit avoir au maximum 40 caractères.");
   else if (!RegName.test(value)) displayDataError(parentElement, "Veuillez entrer un nom correct.");
   else return removeDataErrror(parentElement);
-} 
+}  
 
 // Verify Email
-email.addEventListener("change", () => verifyMail())
+email.addEventListener("change"&&"focusout", () => verifyMail())
 const verifyMail = () => {
   let { value, parentElement } = email;
   if (value.length == 0) displayDataError(parentElement, "Veuillez entrer votre adresse email");
+  else if (length > 100) displayDataError(parentElement, "Votre email doit avoir au maximum 100 caractères.");
   else if (!RegMail.test(value)) displayDataError(parentElement, "Votre adresse email est incorrect");
   else return removeDataErrror(parentElement);
 } 
 
 // Verify bith date
-birthDate.addEventListener("change", () => verifyBirthDate());
+birthDate.addEventListener("change"&&"focusout", () => verifyBirthDate());
 const verifyBirthDate = () => {
   let { value, parentElement } = birthDate,
   inputDate = new Date(value),
@@ -95,7 +98,7 @@ const verifyBirthDate = () => {
 }
 
 // verify the number of tournaments already played
-quantity.addEventListener("change", () => verifyQuantity());
+quantity.addEventListener("change"&&"focusout", () => verifyQuantity());
 const verifyQuantity = () => {
   let {value, parentElement} = quantity;
 
