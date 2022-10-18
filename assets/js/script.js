@@ -1,4 +1,5 @@
-// DOM Elements
+/**########################### CONST ###########################**/
+/**######### DOM ELEMENTS #########**/
 const body = document.querySelector("body"),
 header = document.getElementById("header"),
 navbarToggler = document.getElementById("navbar-toggler"),
@@ -16,90 +17,88 @@ quantity = document.getElementById("quantity"),
 eventLocation = document.querySelectorAll(".radio-input[name='location']"),
 condition = document.querySelector("#checkbox1");
 
-// Regex
+/**######### REGEX #########**/
 const RegName = /^[a-zA-Z\- ]{2,20}$/i,
 RegMail = /^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/i;
 
-// launch/Display the mobile navbar
-navbarToggler.addEventListener("click", () => {
-  header.classList.toggle("is-open");
-})
-
-// launch modal event
-btnSignup.forEach((btn) => btn.addEventListener("click", () => {
-  body.classList.add("scroll-hidden");
-  modal.classList.add("is-open");
-}));
-
-// closes the modal
-close.addEventListener("click", () => {
-  body.classList.remove("scroll-hidden");
-  modal.classList.remove("is-open")
-})
-
-// verify First Name
-firstName.addEventListener("change"&&"focusout", () => verifyFirstName());
-const verifyFirstName = () => {
-  let { value, parentElement } = firstName,
-  length = value.length - (value.split(" ").length-1);
-
-  if (length == 0) displayDataError(parentElement, "Veuillez entrer votre prénom.");
-  else if (length < 2) displayDataError(parentElement, "Veuillez entrer 2 caractères ou plus pour le champ du prénom.");
-  else if (length > 40) displayDataError(parentElement, "Votre prénom doit avoir au maximum 40 caractères.");
-  else if (!RegName.test(value)) displayDataError(parentElement, "Veuillez entrer un prénom correct.");
-  else return removeDataErrror(parentElement);
+/**######### DATA #########**/
+const dataTest = {
+  firstName: {
+    void: "Veuillez entrer votre prénom.",
+    min: [2, "Veuillez entrer 2 caractères ou plus pour le champ du prénom."],
+    max: [40, "Votre prénom doit avoir au maximum 40 caractères."],
+    regex: [RegName, "Veuillez entrer un prénom correct."]
+  },
+  lastName: {
+    void: "Veuillez entrer votre nom.",
+    min: [2, "Veuillez entrer 2 caractères ou plus pour le champ du nom."],
+    max: [40, "Votre nom doit avoir au maximum 40 caractères."],
+    regex: [RegName, "Veuillez entrer un nom correct."]
+  },
+  email: {
+    void: "Veuillez entrer votre adresse email",
+    max: [100, "Votre email doit avoir au maximum 100 caractères."],
+    regex: [RegMail, "Veuillez entrer un nom correct."]
+  }
 }
 
-// Verify last Name
-lastName.addEventListener("change"&&"focusout", () => verifyLastName());
-const verifyLastName = () => {
+/**######### FUNCTIONS #########**/
+// open the modal
+openModal = () => {
+  body.classList.add("scroll-hidden");
+  modal.classList.add("is-open");
+}
+// close the modal
+closeModal = () => {
+  body.classList.remove("scroll-hidden");
+  modal.classList.remove("is-open");
+},
+// reset all data in the form
+resetForm = () => {
+  closeModal();
+  form.reset();
+  document.querySelector('.message-sucess').remove();
+  form.style.display = "flex";
+  close.removeEventListener("click", resetForm);
+  close.addEventListener("click", closeModal);
+},
+// verify the element if error display the error
+verify = (e, dataTest) => {
+  let { value, parentElement } = e,
+  length = value.length - (value.split(" ").length-1),
+  { min, max, regex } = dataTest;
 
-  let { value, parentElement } = lastName,
-  length = value.length - (value.split(" ").length-1);
-
-  if (length == 0) displayDataError(parentElement, "Veuillez entrer votre nom.");
-  else if (length < 2) displayDataError(parentElement, "Veuillez entrer 2 caractères ou plus pour le champ du nom.");
-  else if (length > 40) displayDataError(parentElement, "Votre nom doit avoir au maximum 40 caractères.");
-  else if (!RegName.test(value)) displayDataError(parentElement, "Veuillez entrer un nom correct.");
+  // All control test
+  if (dataTest.void && length == 0) displayDataError(parentElement, dataTest.void);
+  else if(min && length < min[0]) displayDataError(parentElement, min[1]);
+  else if(min && length > max[0]) displayDataError(parentElement, max[1]);
+  else if(regex && !regex[0].test(value)) displayDataError(parentElement, regex[1]);
   else return removeDataErrror(parentElement);
-}  
-
-// Verify Email
-email.addEventListener("change"&&"focusout", () => verifyMail())
-const verifyMail = () => {
-  let { value, parentElement } = email;
-  if (value.length == 0) displayDataError(parentElement, "Veuillez entrer votre adresse email");
-  else if (length > 100) displayDataError(parentElement, "Votre email doit avoir au maximum 100 caractères.");
-  else if (!RegMail.test(value)) displayDataError(parentElement, "Votre adresse email est incorrect");
-  else return removeDataErrror(parentElement);
-} 
-
-// Verify bith date
-birthDate.addEventListener("change"&&"focusout", () => verifyBirthDate());
-const verifyBirthDate = () => {
+},
+/**######### All controll valid form  #########**/
+verifyFirstName = () => verify(firstName, dataTest.firstName),
+verifyLastName = () => verify(lastName, dataTest.lastName),
+verifyEmail = () => verify(email, dataTest.email),
+verifyBirthDate = () => {
   let { value, parentElement } = birthDate,
   inputDate = new Date(value),
   today = new Date(),
-  validDate = (age) => {
-    return new Date(
-      today.getFullYear()-age,
-      today.getMonth(),
-      today.getDate(),
-      today.getHours(),
-      today.getMinutes()
-    );
-  }; 
+  validDate = age => new Date(
+    today.getFullYear()-age,
+    today.getMonth(),
+    today.getDate(),
+    today.getHours(),
+    today.getMinutes()
+  ); 
   // min 3 years and max 100 years
   const min = validDate(3), max = validDate(100);
 
   if (value.length == 0) displayDataError(parentElement, "Vous devez entrer votre date de naissance.");
   else if (inputDate < max || inputDate > min ) displayDataError(parentElement, "Votre date de naissance est inccorect ! vous devez avoir entre 3 et 100 ans.");
   else return removeDataErrror(parentElement);
-}
-
-// verify the number of tournaments already played
-quantity.addEventListener("change"&&"focusout", () => verifyQuantity());
-const verifyQuantity = () => {
+},
+// Verify quantity
+verifyQuantity = () => {
   let {value, parentElement} = quantity;
 
   if (value.length == 0) {
@@ -107,37 +106,52 @@ const verifyQuantity = () => {
   } else if (value < 0 || value > 99 || !Number.isInteger(parseFloat(value)) ) {
     displayDataError(parentElement, "Vous devez saisir un numbre correct entre 0 et 99 compris")
   } else return removeDataErrror(parentElement);
-}
-
-// Verify checkBox of tournaments
-for (const e of eventLocation) e.addEventListener("change", () => verifyCheckbox());
-const verifyCheckbox = () => {
-  let checked = false,
-  parentElement = eventLocation[0].parentElement;
-
-  for (const e of eventLocation) {
-    if(e.checked) checked = true;
-  }
-
-  if (!checked) displayDataError(parentElement, "Vous devez choisir une option.");
-  else return removeDataErrror(parentElement);
-}
-
-// verify the condition
-condition.addEventListener("change", () => verifyCondition())
-const verifyCondition = () => {
+},
+// radio checkBox
+verifyCheckbox = () => {
+  let checked = document.querySelectorAll(".radio-input[name='location']:checked").length;
+  return verifyCheck(checked, eventLocation[0].parentElement, "Vous devez choisir une option.");
+},
+// verify condition
+verifyCondition = () => {
   let { checked, parentElement } = condition;
-
-  if (!checked) displayDataError(parentElement, "Vous devez vérifier que vous acceptez les termes et conditions");
-  else return removeDataErrror(parentElement);
+  return verifyCheck(checked, parentElement, "Vous devez vérifier que vous acceptez les termes et conditions");
 }
 
+/**############### EventListener ###############**/
+// launch/Display the mobile navbar
+navbarToggler.addEventListener("click", () => {
+  header.classList.toggle("is-open");
+})
+
+// launch modal event
+btnSignup.forEach(btn => btn.addEventListener("click", openModal));
+// closes the modal
+close.addEventListener("click", closeModal)
+// verify First Name
+firstName.addEventListener("focusout", verifyFirstName);
+// Verify last Name
+lastName.addEventListener("focusout", verifyLastName);
+// Verify Email
+email.addEventListener("focusout", verifyEmail);
+// Verify bith date
+birthDate.addEventListener("focusout", verifyBirthDate);
+// verify the number of tournaments already played
+quantity.addEventListener("focusout", verifyQuantity);
+// Verify checkBox of tournaments
+for (const e of eventLocation) e.addEventListener("change", verifyCheckbox);
+// verify the condition
+condition.addEventListener("change", verifyCondition);
 // if the submitted form
-submit.addEventListener("click", (e) => {
+submit.addEventListener("click", e => submitForm(e))
+
+/**########################### FUNCTION ###########################**/
+function submitForm(e) {
   e.preventDefault();
-  if( verifyFirstName() && verifyLastName() && verifyMail() && verifyBirthDate() && verifyQuantity() && verifyCheckbox() && verifyCondition() ) {
-    
+  if( /*verifyFirstName() && verifyLastName() && verifyEmail() && verifyBirthDate() && verifyQuantity() && verifyCheckbox() && verifyCondition()*/ true ) {
+    // create a new message of sucess
     const div = document.createElement("div");
+    div.className = "message-sucess";
     form.style.display = "none";
     
     // create a new message of success
@@ -147,27 +161,24 @@ submit.addEventListener("click", (e) => {
 
     // Create a new button for close the modal
     const button = document.createElement("button");
-    button.className = "btn-submit";
+    button.className = "btn btn-submit";
     button.innerText = "Fermer"
-    button.addEventListener("click", () => {
-        modalbg.style.display = "none";
-    })
+    button.addEventListener("click", resetForm);
 
     // Add the elements
     div.appendChild(alert);
     div.appendChild(button);
     modalBody.appendChild(div);
-  }
-})
 
-// allows you to change the status of topnav
-function editNav() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
+    // update buttons .close
+    close.removeEventListener("click", closeModal);
+    close.addEventListener("click", resetForm);
   }
+}
+// verify is chekced
+function verifyCheck(checked, parentElement, errorMessage) {
+  if (!checked) displayDataError(parentElement, errorMessage);
+  else return removeDataErrror(parentElement);
 }
 
 // displays the error message

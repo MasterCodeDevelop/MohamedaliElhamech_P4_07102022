@@ -164,6 +164,22 @@ a {
   justify-content: center;
   align-items: center;
 }
+.message-sucess {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.message-sucess h1 {
+  text-align: center;
+  font-size: 36px;
+  position: absolute;
+  top: 40%;
+}
+.message-sucess button {
+  position: absolute;
+  top: 90%;
+  padding: 8px 50px;
+}
 /*==== button close modal ====*/
 .close {
   position: absolute;
@@ -385,7 +401,8 @@ label,.text-label {
   /*== modal ==*/
   .modal-content {
     margin-block: 20px;
-    max-width: 536px;
+    width: 536px;
+    min-height: 850px;
   }
   .checkbox-icon::after {
     left: 25%;
@@ -400,7 +417,7 @@ label,.text-label {
 @media screen and (min-width: 769px) and (max-width: 1440px) {
   /*== Variables ==*/
   :root {
-    --size: (100vw/1440);
+    --size: calc(100vw/1440);
     --font-size-xxl: calc( var(--size) * 96);
     --font-size-l: calc( var(--size) * 24);
     --font-size-m: calc( var(--size) * 18);
@@ -429,7 +446,7 @@ label,.text-label {
 @media screen and (max-width: 768px) {
   /*== Variables ==*/
   :root {
-    --size: (100vw/414);
+    --size: calc(100vw/414);
     --font-size-xxl: calc( var(--size) * 40);
     --font-size-l: calc( var(--size) * 13);
     --font-size-m: calc( var(--size) * 10);
@@ -478,6 +495,9 @@ label,.text-label {
     border-radius: 0.5rem;
     box-shadow: 0 2px 7px 2px rgba(0, 0, 0, 0.2);
   }
+  .nav-item {
+    font-size: calc(var(--size) * 14);
+  }
   /*== hero ==*/
    .hero-section {
     display: grid;
@@ -505,6 +525,8 @@ label,.text-label {
     margin-top: 80px;
   }
   .modal-content {
+    width: 100vw;
+    height: 100%;
     border-radius: 8px 8px 0 0;
   }
   .modal-body {
