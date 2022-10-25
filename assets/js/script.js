@@ -38,7 +38,7 @@ const dataTest = {
   email: {
     void: "Veuillez entrer votre adresse email",
     max: [100, "Votre email doit avoir au maximum 100 caractères."],
-    regex: [RegMail, "Veuillez entrer un nom correct."]
+    regex: [RegMail, "Veuillez entrer un email correct."]
   }
 }
 
@@ -148,7 +148,7 @@ submit.addEventListener("click", e => submitForm(e))
 /**########################### FUNCTION ###########################**/
 function submitForm(e) {
   e.preventDefault();
-  if( /*verifyFirstName() && verifyLastName() && verifyEmail() && verifyBirthDate() && verifyQuantity() && verifyCheckbox() && verifyCondition()*/ true ) {
+  if( verifyFirstName() && verifyLastName() && verifyEmail() && verifyBirthDate() && verifyQuantity() && verifyCheckbox() && verifyCondition() ) {
     // create a new message of sucess
     const div = document.createElement("div");
     div.className = "message-sucess";
